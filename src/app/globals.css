@@ -1,9 +1,13 @@
+/* Import design system tokens */
+@import "../styles/design-system.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    /* Shadcn/UI theme colors (HSL-based) */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -63,7 +67,111 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Improve text rendering for Apple fonts */
+  h1, h2, h3, h4, h5, h6 {
+    font-feature-settings: "cv11", "ss01", "calt";
+    letter-spacing: var(--tracking-tighter);
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus visible for better accessibility */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism utilities */
+  .glass {
+    background: var(--glass-light-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+
+  .dark .glass {
+    background: var(--glass-dark-bg);
+  }
+
+  .glass-border {
+    border: 1px solid var(--glass-border-light);
+  }
+
+  .dark .glass-border {
+    border-color: var(--glass-border-dark);
+  }
+
+  /* Elevation utilities */
+  .elevation-0 {
+    box-shadow: var(--elevation-0);
+  }
+
+  .elevation-1 {
+    box-shadow: var(--elevation-1);
+  }
+
+  .elevation-2 {
+    box-shadow: var(--elevation-2);
+  }
+
+  .elevation-3 {
+    box-shadow: var(--elevation-3);
+  }
+
+  .elevation-4 {
+    box-shadow: var(--elevation-4);
+  }
+
+  .elevation-5 {
+    box-shadow: var(--elevation-5);
+  }
+
+  .elevation-6 {
+    box-shadow: var(--elevation-6);
+  }
+
+  /* Typography utilities */
+  .font-display {
+    font-family: var(--font-sans);
+    font-weight: var(--font-semibold);
+  }
+
+  .font-body {
+    font-family: var(--font-sans);
+    font-weight: var(--font-regular);
+  }
+
+  /* Animation utilities */
+  .animate-ease-out {
+    animation-timing-function: var(--ease-out);
+  }
+
+  .animate-ease-in {
+    animation-timing-function: var(--ease-in);
+  }
+
+  .animate-ease-in-out {
+    animation-timing-function: var(--ease-in-out);
+  }
+
+  .animate-spring {
+    animation-timing-function: var(--ease-spring);
+  }
+
+  .animate-bounce {
+    animation-timing-function: var(--ease-bounce);
   }
 }
