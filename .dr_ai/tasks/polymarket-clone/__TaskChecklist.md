@@ -1,15 +1,15 @@
 # polymarket-clone Checklist
 
-- [ ] T0: Create branch feat/polymarket-clone
+- [x] T0: Create branch feat/polymarket-clone ✅
 
 - [ ] T0: Supabase Database Setup -> See TaskPlan (0)
-  - [ ] T0.1: Create 001_initial_schema.sql with all 5 tables
-  - [ ] T0.2: Create 002_rls_policies.sql with security policies
-  - [ ] T0.3: Create 003_triggers.sql with update triggers
-  - [ ] T0.4: Create sync-gamma-markets Edge Function
-  - [ ] T0.5: Generate TypeScript types from database
-  - [ ] T0.6: Create .env.local with credentials
-  - [ ] T0.7: Test database connection
+  - [x] T0.1: Create 001_initial_schema.sql with all 5 tables ✅
+  - [x] T0.2: Create 002_rls_policies.sql with security policies ✅
+  - [x] T0.3: Create 003_triggers.sql with update triggers ✅
+  - [x] T0.4: Create sync-gamma-markets Edge Function ✅
+  - [ ] T0.5: Generate TypeScript types from database (Need Next.js project first)
+  - [x] T0.6: Create .env.local with credentials ✅
+  - [ ] T0.7: Test database connection (Need Next.js project first)
   Agent: supabase-edge-functions
 
 - [ ] T1: Project Setup and Base Configuration -> See TaskPlan (1)
