@@ -1,5 +1,5 @@
 {
-  "active_task": "polymarket-clone",
+  "active_task": "breaking-markets",
   "tasks": [
     {
       "name": "polymarket-clone",
@@ -7,6 +7,20 @@
       "executed_at": "10/01/2026 18:52:00",
       "completed_at": null,
       "status": "in_progress"
+    },
+    {
+      "name": "typescript-fix-strategy",
+      "created_at": "11/01/2026 13:08:28",
+      "executed_at": null,
+      "completed_at": null,
+      "status": "planned"
+    },
+    {
+      "name": "breaking-markets",
+      "created_at": "11/01/2026 21:11:05",
+      "executed_at": null,
+      "completed_at": null,
+      "status": "planned"
     }
   ]
 }

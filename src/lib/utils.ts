@@ -1,417 +1,242 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-/**
- * Combines class names using clsx and tailwind-merge
- * @param inputs - Class names to combine
- * @returns Merged class string
- */
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 // ============================================================================
-// Number Formatting Utilities
+// Timestamp Utilities
 // ============================================================================
 
 /**
- * Formats a number as currency with proper symbol and decimals
- * @param value - The numeric value to format
- * @param currency - Currency code (default: "USD")
- * @param decimals - Number of decimal places (default: 2)
- * @returns Formatted currency string (e.g., "$1,234.56")
+ * Format a timestamp as absolute date/time (Polymarket style)
+ * @param timestamp - ISO string or Date object
+ * @param includeTime - Whether to include time (default: true)
+ * @returns Formatted string: "Jan 11, 9:23 PM" or "Jan 11, 2026"
+ *
+ * @example
+ * formatAbsoluteTimestamp('2026-01-11T21:23:00Z') // "Jan 11, 9:23 PM"
+ * formatAbsoluteTimestamp('2026-01-11T21:23:00Z', false) // "Jan 11, 2026"
+ * formatAbsoluteTimestamp(new Date('2026-01-11T21:23:00Z')) // "Jan 11, 9:23 PM"
  */
-export function formatCurrency(
-  value: number,
-  currency: string = "USD",
-  decimals: number = 2
+export function formatAbsoluteTimestamp(
+  timestamp: string | Date,
+  includeTime: boolean = true
 ): string {
-  if (isNaN(value)) return "$0.00";
+  const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp
 
-  const formatted = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency,
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  }).format(value);
-
-  return formatted;
-}
-
-/**
- * Formats a number as a percentage
- * @param value - The numeric value to format (e.g., 0.123 for 12.3%)
- * @param decimals - Number of decimal places (default: 2)
- * @returns Formatted percentage string (e.g., "+12.34%" or "-5.67%")
- */
-export function formatPercentage(value: number, decimals: number = 2): string {
-  if (isNaN(value)) return "0.00%";
-
-  const sign = value >= 0 ? "+" : "";
-  return `${sign}${(value * 100).toFixed(decimals)}%`;
-}
-
-/**
- * Formats large numbers with K, M, B, T suffixes
- * @param value - The numeric value to format
- * @param decimals - Number of decimal places (default: 1)
- * @returns Formatted string (e.g., "1.2K", "1.5M", "2.3B")
- */
-export function formatLargeNumber(value: number, decimals: number = 1): string {
-  if (isNaN(value)) return "0";
-
-  const abs = Math.abs(value);
-  const sign = value < 0 ? "-" : "";
-
-  if (abs >= 1e12) {
-    return `${sign}${(abs / 1e12).toFixed(decimals)}T`;
-  }
-  if (abs >= 1e9) {
-    return `${sign}${(abs / 1e9).toFixed(decimals)}B`;
-  }
-  if (abs >= 1e6) {
-    return `${sign}${(abs / 1e6).toFixed(decimals)}M`;
-  }
-  if (abs >= 1e3) {
-    return `${sign}${(abs / 1e3).toFixed(decimals)}K`;
+  // Handle invalid dates
+  if (isNaN(date.getTime())) {
+    return 'Invalid date'
   }
 
-  return value.toString();
-}
-
-/**
- * Formats a decimal as a price (0-100% range)
- * @param value - Decimal value (0-1)
- * @param decimals - Number of decimal places (default: 1)
- * @returns Formatted price string (e.g., "12.3c")
- */
-export function formatPrice(value: number, decimals: number = 1): string {
-  if (isNaN(value)) return "0c";
-  const cents = Math.round(value * 100);
-  return `${cents.toFixed(decimals)}c`;
-}
-
-// ============================================================================
-// Date Formatting Utilities
-// ============================================================================
-
-/**
- * Formats a date as relative time (e.g., "2 hours ago")
- * @param date - The date to format
- * @returns Relative time string
- */
-export function formatRelativeTime(date: Date): string {
-  const now = new Date();
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-  if (diffInSeconds < 60) {
-    return "just now";
-  }
-
-  const diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) {
-    return `${diffInMinutes} minute${diffInMinutes > 1 ? "s" : ""} ago`;
-  }
-
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) {
-    return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
-  }
-
-  const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays < 30) {
-    return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
-  }
-
-  const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths < 12) {
-    return `${diffInMonths} month${diffInMonths > 1 ? "s" : ""} ago`;
-  }
-
-  const diffInYears = Math.floor(diffInMonths / 12);
-  return `${diffInYears} year${diffInYears > 1 ? "s" : ""} ago`;
-}
-
-/**
- * Formats a date as a full date and time string
- * @param date - The date to format
- * @returns Formatted date string (e.g., "Jan 1, 2026, 12:00 PM")
- */
-export function formatDateTime(date: Date): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  }).format(date);
-}
-
-/**
- * Formats a date as a simple date string
- * @param date - The date to format
- * @returns Formatted date string (e.g., "Jan 1, 2026")
- */
-export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-}
-
-/**
- * Calculates time remaining until a target date
- * @param targetDate - The target date
- * @returns Formatted time remaining (e.g., "2d 5h" or "Ended")
- */
-export function formatTimeRemaining(targetDate: Date): string {
-  const now = new Date();
-  const diff = targetDate.getTime() - now.getTime();
-
-  if (diff <= 0) {
-    return "Ended";
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-  if (days > 0) {
-    return `${days}d ${hours}h`;
-  }
-  if (hours > 0) {
-    return `${hours}h ${minutes}m`;
-  }
-  return `${minutes}m`;
-}
-
-// ============================================================================
-// Color Utilities
-// ============================================================================
-
-/**
- * Gets the color class for a price based on change
- * @param price - Current price
- * @param prevPrice - Previous price (optional)
- * @returns Tailwind color class name
- */
-export function getPriceColor(price: number, prevPrice?: number): string {
-  if (prevPrice === undefined) return "text-foreground";
-  return price > prevPrice ? "text-success" : price < prevPrice ? "text-danger" : "text-foreground";
-}
-
-/**
- * Gets the color class for a change value
- * @param change - The change value (positive or negative)
- * @returns Tailwind color class name
- */
-export function getChangeColor(change: number): string {
-  if (change > 0) return "text-success";
-  if (change < 0) return "text-danger";
-  return "text-foreground";
-}
-
-/**
- * Gets the background color class with opacity for a change value
- * @param change - The change value (positive or negative)
- * @returns Tailwind background color class name
- */
-export function getChangeBgColor(change: number): string {
-  if (change > 0) return "bg-success/10";
-  if (change < 0) return "bg-danger/10";
-  return "bg-muted";
-}
-
-// ============================================================================
-// Validation Utilities
-// ============================================================================
-
-/**
- * Validates an email address format
- * @param email - Email string to validate
- * @returns True if valid email format
- */
-export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
- * Validates a slug format (lowercase alphanumeric with hyphens)
- * @param slug - Slug string to validate
- * @returns True if valid slug format
- */
-export function isValidSlug(slug: string): boolean {
-  const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-  return slugRegex.test(slug);
-}
-
-/**
- * Validates a URL format
- * @param url - URL string to validate
- * @returns True if valid URL format
- */
-export function isValidUrl(url: string): boolean {
   try {
-    new URL(url);
-    return true;
+    const formatter = new Intl.DateTimeFormat(undefined, {
+      month: 'short',
+      day: 'numeric',
+      ...(includeTime ? {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      } : {
+        year: 'numeric'
+      })
+    })
+
+    // Format and clean up the output to match Polymarket style
+    // Intl might add extra spaces or commas, so we normalize
+    let formatted = formatter.format(date)
+
+    // Normalize to match Polymarket format: "Jan 11, 9:23 PM" or "Jan 11, 2026"
+    // Remove any extra spaces and ensure consistent comma usage
+    formatted = formatted
+      .replace(/\s+/g, ' ')
+      .replace(/,(\S)/g, ', $1')
+      .trim()
+
+    return formatted
   } catch {
-    return false;
+    return 'Invalid date'
   }
 }
 
 /**
- * Validates if a string is a valid number
- * @param value - String to validate
- * @returns True if valid number
+ * Format a timestamp as relative time (e.g., "2h ago", "3 days ago")
+ * @param timestamp - ISO string or Date object
+ * @returns Formatted string: "2h ago", "3 days ago", "just now"
+ *
+ * @example
+ * formatRelativeTimestamp('2026-01-11T20:00:00Z') // "2h ago" (if current time is 22:00)
+ * formatRelativeTimestamp('2026-01-08T10:00:00Z') // "3 days ago"
+ * formatRelativeTimestamp(new Date(Date.now() - 30000)) // "just now"
  */
-export function isValidNumber(value: string): boolean {
-  return !isNaN(Number(value)) && isFinite(Number(value));
-}
+export function formatRelativeTimestamp(
+  timestamp: string | Date
+): string {
+  const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp
 
-// ============================================================================
-// String Utilities
-// ============================================================================
-
-/**
- * Truncates a string to a specified length with ellipsis
- * @param str - String to truncate
- * @param maxLength - Maximum length
- * @returns Truncated string
- */
-export function truncate(str: string, maxLength: number): string {
-  if (str.length <= maxLength) return str;
-  return `${str.slice(0, maxLength)}...`;
-}
-
-/**
- * Capitalizes the first letter of a string
- * @param str - String to capitalize
- * @returns Capitalized string
- */
-export function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
-
-/**
- * Converts a string to title case
- * @param str - String to convert
- * @returns Title case string
- */
-export function titleCase(str: string): string {
-  return str
-    .toLowerCase()
-    .split(" ")
-    .map((word) => capitalize(word))
-    .join(" ");
-}
-
-/**
- * Generates a slug from a string
- * @param str - String to slugify
- * @returns Slug string
- */
-export function slugify(str: string): string {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-// ============================================================================
-// Array Utilities
-// ============================================================================
-
-/**
- * Chunks an array into smaller arrays of specified size
- * @param arr - Array to chunk
- * @param size - Chunk size
- * @returns Array of chunks
- */
-export function chunk<T>(arr: T[], size: number): T[][] {
-  const chunks: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) {
-    chunks.push(arr.slice(i, i + size));
+  // Handle invalid dates
+  if (isNaN(date.getTime())) {
+    return 'Invalid date'
   }
-  return chunks;
+
+  const now = new Date()
+  const diffMs = now.getTime() - date.getTime()
+  const isFuture = diffMs < 0
+  const absDiffMs = Math.abs(diffMs)
+
+  // Time constants in milliseconds
+  const MINUTE = 60 * 1000
+  const HOUR = 60 * MINUTE
+  const DAY = 24 * HOUR
+  const WEEK = 7 * DAY
+  const MONTH = 30 * DAY
+
+  // Determine the appropriate format
+  const value = absDiffMs
+  const suffix = isFuture ? '' : ' ago'
+  const prefix = isFuture ? 'in ' : ''
+
+  if (value < MINUTE) {
+    return 'just now'
+  } else if (value < HOUR) {
+    const minutes = Math.floor(value / MINUTE)
+    return `${prefix}${minutes}m${suffix}`
+  } else if (value < DAY) {
+    const hours = Math.floor(value / HOUR)
+    return `${prefix}${hours}h${suffix}`
+  } else if (value < WEEK) {
+    const days = Math.floor(value / DAY)
+    return `${prefix}${days} day${days > 1 ? 's' : ''}${suffix}`
+  } else if (value < MONTH) {
+    const weeks = Math.floor(value / WEEK)
+    return `${prefix}${weeks} week${weeks > 1 ? 's' : ''}${suffix}`
+  } else {
+    // For dates older than 30 days, use absolute format
+    return formatAbsoluteTimestamp(date, false)
+  }
 }
 
 /**
- * Removes duplicates from an array
- * @param arr - Array with duplicates
- * @returns Array with unique values
+ * Format timestamp for tweets (shorter format)
+ * @param timestamp - ISO string or Date object
+ * @returns Formatted string: "2h", "3d", "Jan 11"
+ *
+ * @example
+ * formatTweetTimestamp('2026-01-11T20:00:00Z') // "2h"
+ * formatTweetTimestamp('2026-01-08T10:00:00Z') // "3d"
+ * formatTweetTimestamp('2025-12-15T10:00:00Z') // "Dec 15"
  */
-export function unique<T>(arr: T[]): T[] {
-  return Array.from(new Set(arr));
+export function formatTweetTimestamp(timestamp: string | Date): string {
+  const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp
+
+  // Handle invalid dates
+  if (isNaN(date.getTime())) {
+    return 'Invalid date'
+  }
+
+  const now = new Date()
+  const diffMs = now.getTime() - date.getTime()
+  const absDiffMs = Math.abs(diffMs)
+
+  // Time constants in milliseconds
+  const MINUTE = 60 * 1000
+  const HOUR = 60 * MINUTE
+  const DAY = 24 * HOUR
+  const WEEK = 7 * DAY
+
+  // Determine the appropriate format
+  if (absDiffMs < MINUTE) {
+    return 'now'
+  } else if (absDiffMs < HOUR) {
+    const minutes = Math.floor(absDiffMs / MINUTE)
+    return `${minutes}m`
+  } else if (absDiffMs < DAY) {
+    const hours = Math.floor(absDiffMs / HOUR)
+    return `${hours}h`
+  } else if (absDiffMs < WEEK) {
+    const days = Math.floor(absDiffMs / DAY)
+    return `${days}d`
+  } else {
+    // For older tweets, use short date format: "Jan 11"
+    try {
+      const formatter = new Intl.DateTimeFormat(undefined, {
+        month: 'short',
+        day: 'numeric'
+      })
+      return formatter.format(date)
+    } catch {
+      return 'Invalid date'
+    }
+  }
 }
 
 /**
- * Sorts an array of objects by a key
- * @param arr - Array to sort
- * @param key - Key to sort by
- * @param order - Sort order ("asc" or "desc")
- * @returns Sorted array
+ * Get a human-readable duration between two timestamps
+ * @param start - Start timestamp (ISO string or Date)
+ * @param end - End timestamp (ISO string or Date), defaults to now
+ * @returns Formatted duration string
+ *
+ * @example
+ * formatDuration('2026-01-11T10:00:00Z', '2026-01-11T12:30:00Z') // "2h 30m"
+ * formatDuration('2026-01-11T10:00:00Z') // Duration from start to now
  */
-export function sortBy<T>(
-  arr: T[],
-  key: keyof T,
-  order: "asc" | "desc" = "asc"
-): T[] {
-  return [...arr].sort((a, b) => {
-    const aVal = a[key];
-    const bVal = b[key];
+export function formatDuration(
+  start: string | Date,
+  end?: string | Date
+): string {
+  const startDate = typeof start === 'string' ? new Date(start) : start
+  const endDate = end
+    ? (typeof end === 'string' ? new Date(end) : end)
+    : new Date()
 
-    if (aVal < bVal) return order === "asc" ? -1 : 1;
-    if (aVal > bVal) return order === "asc" ? 1 : -1;
-    return 0;
-  });
-}
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    return 'Invalid duration'
+  }
 
-// ============================================================================
-// Object Utilities
-// ============================================================================
+  const diffMs = endDate.getTime() - startDate.getTime()
+  const absDiffMs = Math.abs(diffMs)
 
-/**
- * Removes undefined values from an object
- * @param obj - Object to clean
- * @returns Object with defined values only
- */
-export function removeUndefined<T extends Record<string, unknown>>(
-  obj: T
-): Partial<T> {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([_, v]) => v !== undefined)
-  ) as Partial<T>;
-}
+  const MINUTE = 60 * 1000
+  const HOUR = 60 * MINUTE
+  const DAY = 24 * HOUR
 
-/**
- * Deep clones an object
- * @param obj - Object to clone
- * @returns Cloned object
- */
-export function deepClone<T>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj));
+  const parts: string[] = []
+
+  const days = Math.floor(absDiffMs / DAY)
+  const hours = Math.floor((absDiffMs % DAY) / HOUR)
+  const minutes = Math.floor((absDiffMs % HOUR) / MINUTE)
+
+  if (days > 0) parts.push(`${days}d`)
+  if (hours > 0) parts.push(`${hours}h`)
+  if (minutes > 0 || parts.length === 0) parts.push(`${minutes}m`)
+
+  return parts.join(' ')
 }
 
 /**
- * Gets a nested value from an object using a dot-notation path
- * @param obj - Object to query
- * @param path - Dot-notation path (e.g., "user.profile.name")
- * @param defaultValue - Default value if path not found
- * @returns Value at path or default
+ * Check if a timestamp is within a recent time window
+ * @param timestamp - ISO string or Date to check
+ * @param windowMs - Time window in milliseconds (default: 24 hours)
+ * @returns True if the timestamp is within the window
+ *
+ * @example
+ * isRecent('2026-01-11T20:00:00Z') // true if within 24h of now
+ * isRecent('2026-01-11T20:00:00Z', 60 * 60 * 1000) // true if within 1h
  */
-export function get<T>(
-  obj: Record<string, unknown>,
-  path: string,
-  defaultValue?: T
-): T | undefined {
-  const value = path.split(".").reduce<unknown>((o, p) => {
-    return o && typeof o === "object" ? (o as Record<string, unknown>)[p] : undefined;
-  }, obj);
+export function isRecent(
+  timestamp: string | Date,
+  windowMs: number = 24 * 60 * 60 * 1000
+): boolean {
+  const date = typeof timestamp === 'string' ? new Date(timestamp) : timestamp
 
-  return (value as T | undefined) ?? defaultValue;
+  if (isNaN(date.getTime())) {
+    return false
+  }
+
+  const now = new Date()
+  const diffMs = now.getTime() - date.getTime()
+
+  return Math.abs(diffMs) <= windowMs
 }

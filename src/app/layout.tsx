@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+// T17.6: Core Web Vitals tracking
+// import { CoreWebVitals } from "@/components/performance";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
     "Trade on the world's most accurate prediction markets. Buy and sell shares on real-world events including politics, sports, economics, and more.",
   applicationName: "Palpiteiros",
   authors: [{ name: "Palpiteiros Team" }],
-  generator: "Next.js",
+  creator: "Palpiteiros Team",
   keywords: [
     "prediction market",
     "polymarket",
@@ -29,7 +31,6 @@ export const metadata: Metadata = {
     "sports betting",
     "forecasting",
   ],
-  creators: [{ name: "Palpiteiros Team" }],
   publisher: "Palpiteiros",
   robots: {
     index: true,
@@ -92,6 +93,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
+        {/* T17.6: Track Core Web Vitals for performance monitoring */}
+        {/* <CoreWebVitals /> */}
         <Providers>{children}</Providers>
       </body>
     </html>

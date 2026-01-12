@@ -1,0 +1,142 @@
+{
+  "name": "palpiteiros-performance-budget",
+  "version": "1.0.0",
+  "description": "Performance budget configuration for Palpiteiros v2",
+  "budgets": {
+    "javascript": {
+      "警告": {
+        "initial": {
+          "maxSize": "200KB",
+          "maxInstantAtoms": "200"
+        },
+        "chunk": {
+          "maxSize": "100KB",
+          "maxInstantAtoms": "100"
+        }
+      },
+      "error": {
+        "initial": {
+          "maxSize": "300KB",
+          "maxInstantAtoms": "300"
+        },
+        "chunk": {
+          "maxSize": "200KB",
+          "maxInstantAtoms": "200"
+        }
+      }
+    },
+    "css": {
+      "警告": {
+        "maxSize": "20KB"
+      },
+      "error": {
+        "maxSize": "40KB"
+      }
+    },
+    "images": {
+      "警告": {
+        "maxSize": "50KB"
+      },
+      "error": {
+        "maxSize": "100KB"
+      }
+    }
+  },
+  "targets": {
+    "lcp": {
+      "value": 2.5,
+      "unit": "seconds",
+      "label": "Largest Contentful Paint"
+    },
+    "fid": {
+      "value": 100,
+      "unit": "milliseconds",
+      "label": "First Input Delay"
+    },
+    "cls": {
+      "value": 0.1,
+      "unit": "",
+      "label": "Cumulative Layout Shift"
+    },
+    "ttfb": {
+      "value": 0.6,
+      "unit": "seconds",
+      "label": "Time to First Byte"
+    },
+    "fcp": {
+      "value": 1.8,
+      "unit": "seconds",
+      "label": "First Contentful Paint"
+    }
+  },
+  "bundles": {
+    "main": {
+      "target": "200KB",
+      "description": "Main application bundle"
+    },
+    "react": {
+      "target": "45KB",
+      "description": "React and React-DOM"
+    },
+    "vendor": {
+      "target": "150KB",
+      "description": "Third-party dependencies"
+    },
+    "recharts": {
+      "target": "100KB",
+      "description": "Chart library (code split)"
+    },
+    "framer-motion": {
+      "target": "60KB",
+      "description": "Animation library (code split)"
+    },
+    "three": {
+      "target": "200KB",
+      "description": "3D library (lazy loaded)"
+    }
+  },
+  "optimizations": {
+    "treeShaking": {
+      "enabled": true,
+      "description": "Remove unused exports from bundles"
+    },
+    "minification": {
+      "enabled": true,
+      "description": "Minify JavaScript and CSS"
+    },
+    "compression": {
+      "enabled": true,
+      "description": "Gzip/Brotli compression"
+    },
+    "imageOptimization": {
+      "enabled": true,
+      "description": "Serve WebP/AVIF formats"
+    },
+    "fontOptimization": {
+      "enabled": true,
+      "description": "Use font-display: swap"
+    },
+    "codeSplitting": {
+      "enabled": true,
+      "description": "Split code into route-based chunks"
+    },
+    "lazyLoading": {
+      "enabled": true,
+      "description": "Lazy load non-critical components"
+    }
+  },
+  "monitoring": {
+    "lighthouse": {
+      "targetScores": {
+        "performance": 90,
+        "accessibility": 95,
+        "best-practices": 90,
+        "seo": 95
+      }
+    },
+    "coreWebVitals": {
+      "threshold": "good",
+      "passRate": 0.95
+    }
+  }
+}
