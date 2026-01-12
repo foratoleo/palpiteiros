@@ -12,7 +12,7 @@
 export const dynamic = 'force-dynamic';
 
 import { NotFoundPage } from '@/components/errors/error-page'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { ArrowLeft, Home } from 'lucide-react'
 import Link from 'next/link'
 

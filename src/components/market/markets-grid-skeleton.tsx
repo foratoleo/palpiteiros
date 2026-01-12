@@ -5,7 +5,7 @@
  * Displays placeholder cards while data is loading.
  */
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardHeader } from "@/components/ui/Card"
 
 export function MarketsGridSkeleton({ viewMode = "grid" }: { viewMode?: "grid" | "list" | "compact" }) {
   const skeletonCount = 20 // Show 20 skeleton cards

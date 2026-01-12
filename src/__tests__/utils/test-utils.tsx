@@ -94,7 +94,7 @@ interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
  * @example
  * ```tsx
  * import { renderWithProviders, screen } from '@/__tests__/utils/test-utils'
- * import { Button } from '@/components/ui/button'
+ * import { Button } from '@/components/ui/Button'
  *
  * test('renders button', () => {
  *   renderWithProviders(<Button>Click me</Button>)

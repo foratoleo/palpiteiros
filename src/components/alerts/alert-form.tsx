@@ -35,8 +35,8 @@ import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown, ExternalLink, Calendar, Clock } from 'lucide-react'
 
 // UI Components
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'

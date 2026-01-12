@@ -1,0 +1,5 @@
+{"timestamp": "2026-01-12T10:19:48.188336", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: 'mcp.html'", "type": "PermissionError"}}
+{"timestamp": "2026-01-12T11:04:07.638323", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: 'mcp.html'", "type": "PermissionError"}}
+{"timestamp": "2026-01-12T11:14:23.992376", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: 'mcp.html'", "type": "PermissionError"}}
+{"timestamp": "2026-01-12T11:38:22.642592", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: 'mcp.html'", "type": "PermissionError"}}
+{"timestamp": "2026-01-12T11:56:21.902782", "hook": "init_project", "level": "ERROR", "message": "Initialization failed", "data": {"error": "[Errno 13] Permission denied: 'mcp.html'", "type": "PermissionError"}}

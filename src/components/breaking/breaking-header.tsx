@@ -21,7 +21,7 @@
 
 import * as React from 'react'
 import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/badge'
 import { Activity, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'

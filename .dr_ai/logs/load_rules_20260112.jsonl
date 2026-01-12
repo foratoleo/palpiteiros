@@ -1,0 +1,5 @@
+{"timestamp": "2026-01-12T10:19:48.170448", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}
+{"timestamp": "2026-01-12T11:04:07.626485", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}
+{"timestamp": "2026-01-12T11:14:24.059650", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}
+{"timestamp": "2026-01-12T11:38:22.563824", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}
+{"timestamp": "2026-01-12T11:56:21.892780", "hook": "load_rules", "level": "INFO", "message": "RULES.md not found", "data": {"found": false}}

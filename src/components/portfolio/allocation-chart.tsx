@@ -41,7 +41,7 @@ import {
 } from 'recharts'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PieChart as PieChartIcon, Wallet } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import type { Position } from '@/types/portfolio.types'

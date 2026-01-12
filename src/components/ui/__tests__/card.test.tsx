@@ -6,7 +6,7 @@
 
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@/__tests__/utils/test-utils'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card'
 
 describe('Card Components', () => {
   describe('Card', () => {

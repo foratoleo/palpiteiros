@@ -6,7 +6,7 @@
 
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@/__tests__/utils/test-utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 
 describe('Button Component', () => {
   describe('Rendering', () => {

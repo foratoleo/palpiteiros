@@ -34,7 +34,7 @@ import {
   Bug
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { cva, type VariantProps } from 'class-variance-authority'

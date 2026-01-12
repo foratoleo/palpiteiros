@@ -43,7 +43,7 @@ import {
   ExternalLink,
   X,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import type { Position, PositionSortOptions } from '@/types/portfolio.types'

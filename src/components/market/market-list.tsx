@@ -29,7 +29,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import type { Market } from '@/types/market.types'
 import { MarketSortField, MarketSortDirection } from '@/types/market.types'
 import { useMarketStore } from '@/stores/market.store'

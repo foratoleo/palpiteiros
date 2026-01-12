@@ -20,7 +20,7 @@
 
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "@/components/providers/ThemeProvider"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import type { HTMLAttributes } from "react"

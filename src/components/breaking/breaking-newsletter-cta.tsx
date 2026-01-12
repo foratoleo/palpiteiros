@@ -20,9 +20,9 @@
 import * as React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, Mail, CheckCircle, AlertCircle, Sparkles } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Card, CardContent } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
 import { cn } from '@/lib/utils'
 
 // ============================================================================

@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils'
 import { MarketCard } from './market-card'
 import { MarketCard3D } from './market-card-3d'
 import { MarketGridSkeleton } from './market-card-skeleton'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import type { Market, MarketCardProps } from '@/types/market.types'
 
 /**
