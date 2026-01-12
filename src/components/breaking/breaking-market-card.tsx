@@ -234,29 +234,9 @@ export const BreakingMarketCard = React.memo<BreakingMarketCardProps>(({
 
         {/* Main Content */}
         <div className="relative p-4 pl-14">
-          {/* Market Image + Question */}
+          {/* Title + Thumbnail */}
           <div className="flex items-start gap-3 mb-3">
-            {/* Thumbnail Image */}
-            <div className="relative shrink-0">
-              <div
-                className={cn(
-                  'w-16 h-16 rounded-lg overflow-hidden',
-                  'bg-gradient-to-br from-primary/10 to-primary/5',
-                  'border border-border/50',
-                  'transition-transform duration-200',
-                  'group-hover:scale-105'
-                )}
-              >
-                <img
-                  src={imageUrl}
-                  alt={market.question}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-
-            {/* Question + Category */}
+            {/* Category + Question */}
             <div className="flex-1 min-w-0">
               {/* Category Badge */}
               {market.category && (
@@ -298,6 +278,16 @@ export const BreakingMarketCard = React.memo<BreakingMarketCardProps>(({
                   </span>
                 </div>
               )}
+            </div>
+
+            {/* Thumbnail Image (48x48px) */}
+            <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden border border-border/50">
+              <img
+                src={imageUrl}
+                alt=""
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
           </div>
 

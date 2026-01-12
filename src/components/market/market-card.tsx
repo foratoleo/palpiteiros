@@ -56,7 +56,7 @@ export const MarketCard = React.memo<MarketCardProps>(({
   showLiquidity = true,
   onClick,
   className,
-  showImage = false,
+  showImage = true,
   enableProgressiveImage = true,
   imageLoadingEffect = 'blur-up'
 }) => {
@@ -109,7 +109,23 @@ export const MarketCard = React.memo<MarketCardProps>(({
     ).toString('base64')}`
   }
 
-  // Render image component based on effect
+  // Render thumbnail image (48x48px) for horizontal layout
+  const renderThumbnail = () => {
+    const imageUrl = getImageUrl()
+
+    return (
+      <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden border border-border/50">
+        <img
+          src={imageUrl}
+          alt=""
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )
+  }
+
+  // Render image component based on effect (for detailed variant)
   const renderImage = () => {
     const imageUrl = getImageUrl()
     const imageAlt = market.question || 'Market image'
@@ -178,7 +194,7 @@ export const MarketCard = React.memo<MarketCardProps>(({
             )}
           >
             <CardContent className="p-4">
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
                     {statusBadge}
@@ -200,6 +216,8 @@ export const MarketCard = React.memo<MarketCardProps>(({
                     )}
                   </div>
                 </div>
+                {/* Thumbnail in compact view */}
+                {showImage && renderThumbnail()}
                 {showPrice && <MarketCardPrice market={market} size="sm" />}
               </div>
             </CardContent>
@@ -254,7 +272,8 @@ export const MarketCard = React.memo<MarketCardProps>(({
               </div>
             )}
             <CardHeader className={cn(showImage ? 'pb-3' : 'pb-3')}>
-              <div className={cn('flex items-start justify-between gap-4', showImage && '-mt-2')}>
+              <div className={cn('flex items-start gap-3', showImage && '-mt-2')}>
+                {/* Title section with tags and description */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
                     {statusBadge}
@@ -273,25 +292,28 @@ export const MarketCard = React.memo<MarketCardProps>(({
                     </p>
                   )}
                 </div>
-                {!showImage && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
+
+                {/* Thumbnail in detailed view */}
+                {showImage && renderThumbnail()}
+
+                {/* Favorite button */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    'shrink-0 transition-colors',
+                    favorite && 'text-red-500 hover:text-red-600'
+                  )}
+                  onClick={handleFavoriteClick}
+                  aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
+                >
+                  <Heart
                     className={cn(
-                      'shrink-0 transition-colors',
-                      favorite && 'text-red-500 hover:text-red-600'
+                      'h-5 w-5 transition-all',
+                      favorite && 'fill-current'
                     )}
-                    onClick={handleFavoriteClick}
-                    aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-                  >
-                    <Heart
-                      className={cn(
-                        'h-5 w-5 transition-all',
-                        favorite && 'fill-current'
-                      )}
-                    />
-                  </Button>
-                )}
+                  />
+                </Button>
               </div>
             </CardHeader>
             <CardContent className="pb-3">
@@ -331,7 +353,8 @@ export const MarketCard = React.memo<MarketCardProps>(({
           onClick={handleClick}
         >
           <CardHeader className="pb-3">
-            <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-3">
+              {/* Title section with category badges and question */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                   {statusBadge}
@@ -354,6 +377,11 @@ export const MarketCard = React.memo<MarketCardProps>(({
                   </p>
                 )}
               </div>
+
+              {/* Thumbnail image (48x48px) */}
+              {showImage && renderThumbnail()}
+
+              {/* Favorite button */}
               <Button
                 variant="ghost"
                 size="icon"
